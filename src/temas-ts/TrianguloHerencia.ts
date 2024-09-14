@@ -1,31 +1,38 @@
 class Puntos {
-    constructor(public numero1: number, public numero2: number) {}
-  
-    // Método para calcular la distancia entre este punto y otro punto
-    calcularDistancia(otro: Puntos): number {
-      const numeros1 = this.numero1 - otro.numero1;
-      const numeros2 = this.numero2 - otro.numero2;
-      return Math.sqrt(numeros1 * numeros1 + numeros2 * numeros2);
-    }
+  constructor(public numero1: number, public numero2: number) {}
+
+  calcularDistancia(segundoNum: Puntos): number {
+    const ejex = this.numero1 - segundoNum.numero1;
+    const ejey = this.numero2 - segundoNum.numero2;
+    return Math.sqrt(ejex * ejex + ejey * ejey);
   }
+}
 
 class Triangulo extends Puntos {
-    static formaTriangulo(punto1: Puntos, punto2: Puntos, punto3: Puntos): boolean {
-      const determinante =
-        punto1.numero1 * (punto2.numero2 - punto3.numero2) +
-        punto2.numero1 * (punto3.numero2 - punto1.numero2) +
-        punto3.numero1 * (punto1.numero2 - punto2.numero2);
-  
-      return determinante !== 0;
-    }
+  constructor(public punto1: Puntos, public punto2: Puntos, public punto3: Puntos) {
+    super(punto1.numero1, punto1.numero2); 
   }
-  
-  const punto1 = new Puntos(1, 2);
-  const punto2 = new Puntos(4, 6);
-  const punto3 = new Puntos(7, 2);
-  
-  if (Triangulo.formaTriangulo(punto1, punto2, punto3)) {
-    console.log('Los puntos forman un triángulo.');
-  } else {
-    console.log('Los puntos NO forman un triángulo.');
-  }  
+
+  formaTriangulo(): boolean {
+    const determinante =
+      this.punto1.numero1 * (this.punto2.numero2 - this.punto3.numero2) -
+      this.punto2.numero1 * (this.punto3.numero2 - this.punto1.numero2) +
+      this.punto3.numero1 * (this.punto1.numero2 - this.punto2.numero2);
+
+    console.log(`El determinante es: ${determinante}`);
+
+    return determinante !== 0;
+  }
+}
+
+const punto1 = new Puntos(1, 2);
+const punto2 = new Puntos(4, 6);
+const punto3 = new Puntos(7, 2);
+
+const triangulo = new Triangulo(punto1, punto2, punto3);
+
+if (triangulo.formaTriangulo()) {
+  console.log('Los puntos forman un triángulo.');
+} else {
+  console.log('Los puntos NO forman un triángulo.');
+}
